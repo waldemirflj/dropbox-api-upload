@@ -39,7 +39,7 @@ class AuthController {
 
         const {
           name: { display_name },
-          teste,
+          email,
           account_id,
           email_verified,
           profile_photo_url
