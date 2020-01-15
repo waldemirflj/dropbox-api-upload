@@ -53,13 +53,16 @@ class AuthController {
             email_verified,
             profile_photo_url
           })
-      } catch (error) {
-        const { message } = error
-        req.flash('errorMessage', message)
+      } catch (err) {
+        const { message, error } = err
+        const msg = message
+          ? message
+          : error.error_description
 
         return res.status(200)
           .render('ops/index', {
-            message
+            error: true,
+            message: msg
           })
       }
     }

@@ -1,7 +1,6 @@
 const path = require('path')
 const express = require('express')
 const session = require('express-session')
-const flash = require('connect-flash')
 const routes = require('./routes')
 
 const { SESSION_SECRET } = process.env
@@ -17,7 +16,6 @@ const server = express()
       secure: false
     }
   }))
-  .use(flash())
   .use(express.urlencoded({ extended: true }))
   .use(express.json())
   .use(routes)
