@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dropbox API Upload</title>
+
+    <!-- css -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  </head>
+
+  <body class="container-fluid">
+    <div class="pt-3">
+      <a href="/" class="btn btn-secondary btn-sm">Logout</a>
+
+      <ul class="list-unstyled mt-3">
+        <li>
+          <b>id</b>: <%= account_id %>
+        </li>
+        <li>
+          <b>name</b>: <%= display_name %>
+        </li>
+        <li>
+          <b>email</b>: <%= email %>
+        </li>
+        <li>
+          <b>photo</b>: <%= profile_photo_url %>
+        </li>
+        <li>
+          <b>verified</b>: <%= email_verified %>
+        </li>
+      </ul>
+
+      <% if (email_verified) { %>
+        <form action="" method="post" enctype="multipart/form-data">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Upload</span>
+            </div>
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" id="inputGroupFile01">
+              <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-sm">Upload</button>
+        </form>
+      <% } %>
+    </div>
+  </body>
+</html>
