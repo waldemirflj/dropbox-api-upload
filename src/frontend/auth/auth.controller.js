@@ -20,10 +20,12 @@ class AuthController {
     let { login } = req.session
 
     if (state && code) {
-      let token;
+      let token = login
+        ? login.token
+        : null;
 
       try {
-        if (!login.token) {
+        if (!token) {
           // store token and invalidate state
           token = await dbx.getAccessTokenFromCode(REDIRECT_URL, code)
 
@@ -37,7 +39,7 @@ class AuthController {
 
         const {
           name: { display_name },
-          email,
+          teste,
           account_id,
           email_verified,
           profile_photo_url
@@ -52,7 +54,13 @@ class AuthController {
             profile_photo_url
           })
       } catch (error) {
-        res.redirect('/ops')
+        const { message } = error
+        req.flash('errorMessage', message)
+
+        return res.status(200)
+          .render('ops/index', {
+            message
+          })
       }
     }
 
@@ -69,6 +77,8 @@ class AuthController {
 
     res.redirect(authUrl)
   }
+
+  async destroy (req, res) { }
 }
 
 module.exports = new AuthController()
