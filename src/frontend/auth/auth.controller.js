@@ -2,10 +2,10 @@ const crypto = require('crypto')
 const Dropbox = require('dropbox').Dropbox
 const fetch = require('isomorphic-fetch')
 
-const { DROPBOX_APP_KEY, DROPBOX_APP_SECRET } = process.env
-
-// Redirect URL to pass to Dropbox. Has to be whitelisted in Dropbox settings
-const REDIRECT_URL='http://localhost:3000/auth'
+const {
+  DROPBOX_APP_KEY,
+  DROPBOX_APP_SECRET,
+  DROPBOX_APP_REDIRECT_URI } = process.env
 
 // Dropbox configuration
 const dbx = new Dropbox({
@@ -27,7 +27,7 @@ class AuthController {
       try {
         if (!token) {
           // store token and invalidate state
-          token = await dbx.getAccessTokenFromCode(REDIRECT_URL, code)
+          token = await dbx.getAccessTokenFromCode(DROPBOX_APP_REDIRECT_URI, code)
 
           dbx.setAccessToken(token)
 
@@ -70,7 +70,7 @@ class AuthController {
     state = crypto.randomBytes(16).toString('hex')
 
     // get authentication URL and redirect
-    const authUrl = dbx.getAuthenticationUrl(REDIRECT_URL, state, 'code')
+    const authUrl = dbx.getAuthenticationUrl(DROPBOX_APP_REDIRECT_URI, state, 'code')
 
     req.session.login = {
       id: req.session.id,
