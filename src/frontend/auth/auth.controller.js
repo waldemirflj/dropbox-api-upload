@@ -61,7 +61,6 @@ class AuthController {
 
         return res.status(200)
           .render('ops/index', {
-            error: true,
             message: msg
           })
       }

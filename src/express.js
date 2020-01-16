@@ -16,7 +16,7 @@ const server = express()
       secure: false
     }
   }))
-  .use(express.urlencoded({ extended: true }))
+  .use(express.urlencoded({ extended: false }))
   .use(express.json())
   .use(routes)
 
