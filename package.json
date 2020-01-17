@@ -17,8 +17,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "formidable": "^1.2.1",
-    "isomorphic-fetch": "^2.2.1",
-    "mv": "^2.1.1"
+    "isomorphic-fetch": "^2.2.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"

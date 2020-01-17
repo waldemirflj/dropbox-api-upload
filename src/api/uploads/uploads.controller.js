@@ -1,47 +1,37 @@
-const {
-  UPLOADS_DIR,
-  DOWNLOADS_DIR,
-  DROPBOX_APP_KEY,
-  DROPBOX_APP_SECRET } = process.env
+const { UPLOADS_DIR } = process.env
 
-const mv = require('mv')
 const fs = require('fs')
 const path = require('path')
-const crypto = require('crypto')
-const formidable = require('formidable')
-const Dropbox = require('dropbox').Dropbox
 const fetch = require('isomorphic-fetch')
+const Dropbox = require('dropbox').Dropbox
+const formidable = require('formidable')
 
 class UploadsController {
   async store (req, res) {
-    const { login: { token } } = req.session
+    const { token } = req.session
 
-    const form = new formidable.IncomingForm()
+    const form = new formidable.IncomingForm({
+      uploadDir: path.join(UPLOADS_DIR),
+      keepExtensions: true
+    })
+
     const upload = new Promise((resolve, reject) => {
       form.parse(req, (error, fields, files) => {
         if (error) {
           reject(error)
         }
 
-        const tmp = files.file.path
-        const fileName = crypto.randomBytes(16).toString('hex')
-        const fileExtensio = files.file.name.split('.')[1]
-        const fileDir = path.join(UPLOADS_DIR, `${fileName}.${fileExtensio}`)
+        const { path } = files.file
+        const file = path.split('/').pop()
 
-        mv(tmp, fileDir, (error) => {
-          if (error) {
-            reject(error)
-          }
-        })
-
-        resolve(`${fileName}.${fileExtensio}`)
+        resolve(file)
       })
     })
 
     try {
-      const fileName = await upload
-      const fileDir = path.join(UPLOADS_DIR, fileName)
-      const fileContent = fs.createReadStream(fileDir)
+      const file = await upload
+      const fileDir = path.join(UPLOADS_DIR, file)
+      const fileContent = fs.readFileSync(fileDir)
 
       const dbx = new Dropbox({
         fetch,
@@ -58,16 +48,18 @@ class UploadsController {
         content_hash,
         client_modified,
         server_modified,
-        is_downloadable } = await dbx.filesUpload({ path: `/${fileName}`, contents: fileContent })
+        is_downloadable } = await dbx.filesUpload({ path: `/${file}`, contents: fileContent })
 
-      res.redirect('/')
-    } catch (error) {
-      const { message } = error
+      res.redirect('/logged')
+    } catch (err) {
+      const { message, error } = err
+      const msg = message
+        ? message
+        : error.error_description
 
-      res.status(200)
-        .render('ops/index', {
-          message
-        })
+      res.render('ops/index', {
+        message: msg
+      })
     }
   }
 }

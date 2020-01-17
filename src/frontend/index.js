@@ -1,9 +1,9 @@
 const Router = require('express').Router()
 const homeRoutes = require('./home/routes')
-const authRoutes = require('./auth/routes')
+const loggedRoutes = require('./logged/routes')
 
 const routes = Router
   .use('/', homeRoutes)
-  .use('/auth', authRoutes)
+  .use('/logged', loggedRoutes)
 
 module.exports = routes
