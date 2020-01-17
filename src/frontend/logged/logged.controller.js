@@ -1,3 +1,7 @@
+const {
+  DROPBOX_APP_FOLDER
+} = process.env
+
 const fetch = require('isomorphic-fetch')
 const Dropbox = require('dropbox').Dropbox
 
@@ -15,6 +19,12 @@ class LoggedController {
         accessToken: token
       })
 
+      await dbx.filesCreateFolderBatch({
+        paths: [`/${DROPBOX_APP_FOLDER}`],
+        autorename: false,
+        force_async: false
+      })
+
       const {
         name: { display_name },
         email,
@@ -23,18 +33,26 @@ class LoggedController {
         profile_photo_url
       } = await dbx.usersGetCurrentAccount()
 
+      const { entries } = await dbx.filesListFolder({ path: `/${DROPBOX_APP_FOLDER}` })
+
+      const files = entries.map(({ id, name }) => ({
+        id,
+        name
+      }))
+
       res.render('logged/index', {
         email,
         account_id,
         display_name,
         email_verified,
-        profile_photo_url
+        profile_photo_url,
+        files
       })
     } catch (err) {
       const { message, error } = err
       const msg = message
         ? message
-        : error.error_description
+        : error
 
       res.render('ops/index', {
         message: msg

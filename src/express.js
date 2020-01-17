@@ -3,11 +3,14 @@ const express = require('express')
 const session = require('express-session')
 const routes = require('./routes')
 
-const { SESSION_SECRET } = process.env
+const {
+  PUBLIC_DIR,
+  SESSION_SECRET } = process.env
 
 const server = express()
   .set('view engine', 'ejs')
   .set('views', path.join(__dirname, 'views'))
+  .use(express.static(PUBLIC_DIR))
   .use(session({
     secret: SESSION_SECRET,
     resave: false,

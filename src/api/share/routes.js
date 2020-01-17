@@ -1,5 +1,5 @@
 const Router = require('express').Router()
-const controller = require('./uploads.controller')
+const controller = require('./share.controller')
 
 const routes = Router
   .post('/', controller.store)

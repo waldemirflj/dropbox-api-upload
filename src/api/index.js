@@ -1,10 +1,12 @@
 const Router = require('express').Router()
 const authRoutes = require('./auth/routes')
-const uploadsRoutes = require('./uploads/routes')
+const shareRoutes = require('./share/routes')
+const uploadRoutes = require('./upload/routes')
 
 const routes = Router
   .use('/auth', authRoutes)
-  .use('/uploads', uploadsRoutes)
+  .use('/share', shareRoutes)
+  .use('/upload', uploadRoutes)
 
 
 module.exports = routes

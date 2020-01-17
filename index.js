@@ -1,6 +1,7 @@
 require('dotenv').config()
 const path = require('path')
 
+process.env.PUBLIC_DIR = path.join(__dirname, './upload')
 process.env.UPLOADS_DIR = path.join(__dirname, './upload')
 process.env.DOWNLOADS_DIR = path.join(__dirname, './upload')
 

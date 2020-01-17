@@ -1,11 +1,11 @@
-const fetch = require('isomorphic-fetch')
-const crypto = require('crypto')
-const Dropbox = require('dropbox').Dropbox
-
 const {
   DROPBOX_APP_KEY,
   DROPBOX_APP_SECRET,
   DROPBOX_APP_REDIRECT_URI } = process.env
+
+const fetch = require('isomorphic-fetch')
+const crypto = require('crypto')
+const Dropbox = require('dropbox').Dropbox
 
 const dbx = new Dropbox({
   fetch,
@@ -32,7 +32,7 @@ class AuthController {
       const { message, error } = err
       const msg = message
         ? message
-        : error.error_description
+        : error
 
       res.render('ops/index', {
         message: msg
