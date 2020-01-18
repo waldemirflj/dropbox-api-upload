@@ -45,6 +45,7 @@
           </div>
           <div class="mt-3">
             <button type="submit" class="btn btn-primary btn-sm">Upload</button>
+            <input type="hidden" name="folder" value="<%= folder %>">
           </div>
         </form>
       <% } %>
@@ -59,7 +60,7 @@
                 <div class="mt-3">
                   <form action="/api/share" method="post" id="_<%= file.id %>">
                     <input type="hidden" name="file" value="<%= file.id %>">
-                    <input type="text" name="email" class="form-control form-control-sm" value="waldemirflj@outlook.com">
+                    <input type="text" name="email" class="form-control form-control-sm" value="">
                     <button type="submit" class="btn btn-primary btn-sm w-100 mt-2">Compartilhar</button>
                   </form>
                 </div>

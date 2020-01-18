@@ -34,6 +34,8 @@ class LoggedController {
       } = await dbx.usersGetCurrentAccount()
 
       const { entries } = await dbx.filesListFolder({ path: `/${DROPBOX_APP_FOLDER}` })
+      const { entries: folders } = await dbx.filesListFolder({ path: '' })
+      const { id: folder } = folders.filter(({ name }) => name === DROPBOX_APP_FOLDER)[0]
 
       const files = entries.map(({ id, name }) => ({
         id,
@@ -46,7 +48,8 @@ class LoggedController {
         display_name,
         email_verified,
         profile_photo_url,
-        files
+        files,
+        folder
       })
     } catch (err) {
       const { message, error } = err
