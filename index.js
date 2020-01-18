@@ -2,9 +2,9 @@ require('dotenv').config()
 
 const path = require('path')
 
-process.env.PUBLIC_DIR = path.join(__dirname, './upload')
-process.env.UPLOADS_DIR = path.join(__dirname, './upload')
-process.env.DOWNLOADS_DIR = path.join(__dirname, './upload')
+process.env.PUBLIC_DIR = path.join(__dirname, './public')
+process.env.UPLOADS_DIR = path.join(__dirname, './public')
+process.env.DOWNLOADS_DIR = path.join(__dirname, './public')
 
 const { PORT, NODE_ENV } = process.env
 const server = require('./src/express')

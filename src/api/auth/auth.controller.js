@@ -7,17 +7,17 @@ const fetch = require('isomorphic-fetch')
 const crypto = require('crypto')
 const Dropbox = require('dropbox').Dropbox
 
-const dbx = new Dropbox({
-  fetch,
-  clientId: DROPBOX_APP_KEY,
-  clientSecret: DROPBOX_APP_SECRET
-})
-
 class AuthController {
   async store (req, res) {
     let { state, code } = req.query
 
     try {
+      const dbx = new Dropbox({
+        fetch,
+        clientId: DROPBOX_APP_KEY,
+        clientSecret: DROPBOX_APP_SECRET
+      })
+
       if (!state && !code) {
         state = crypto.randomBytes(16).toString('hex')
         const redirect = dbx.getAuthenticationUrl(DROPBOX_APP_REDIRECT_URI, state, 'code')
@@ -40,7 +40,10 @@ class AuthController {
     }
   }
 
-  async destroy (req, res) { }
+  async destroy (req, res) {
+    req.session.destroy()
+    res.redirect('/logged')
+  }
 }
 
 module.exports = new AuthController()

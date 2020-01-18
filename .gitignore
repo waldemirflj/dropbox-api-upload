@@ -1,4 +1,4 @@
-upload/
+public/
 node_modules/
 
 *.env
