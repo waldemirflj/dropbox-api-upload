@@ -1,4 +1,5 @@
 .env
+.txt
 .gitignore
 .env.sample
 .editorconfig
@@ -8,5 +9,6 @@ LICENSE.md
 nodemon.json
 package-lock.json
 docker-compose.yml
+docker-compose.dev.yml
 
-node_modules
+node_modules/
