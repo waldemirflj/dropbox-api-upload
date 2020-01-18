@@ -1,4 +1,5 @@
 require('dotenv').config()
+
 const path = require('path')
 
 process.env.PUBLIC_DIR = path.join(__dirname, './upload')

@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    network_mode: bridge
+    container_name: dropbox-api-upload
+    env_file:
+      - ./.env
+    environment:
+      - PORT=production
+      - NODE_ENV=${NODE_ENV}
+      - SESSION_SECRET=${SESSION_SECRET}
+      - DROPBOX_APP_KEY=${DROPBOX_APP_KEY}
+      - DROPBOX_APP_SECRET=${DROPBOX_APP_SECRET}
+      - DROPBOX_APP_FOLDER=${DROPBOX_APP_FOLDER}
+      - DROPBOX_APP_REDIRECT_URI=${DROPBOX_APP_REDIRECT_URI}
+    ports:
+      - 3000:3000

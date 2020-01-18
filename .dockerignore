@@ -1,0 +1,12 @@
+.env
+.gitignore
+.env.sample
+.editorconfig
+
+Dockerfile
+LICENSE.md
+nodemon.json
+package-lock.json
+docker-compose.yml
+
+node_modules

@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --config ./nodemon.json ./index.js"
+    "dev": "nodemon --config ./nodemon.json ./index.js",
+    "start": "node ."
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "cookie-parser": "^1.4.4",
     "crypto": "^1.0.1",
     "dotenv": "^8.2.0",
     "dropbox": "^4.0.30",
